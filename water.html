@@ -10,10 +10,9 @@
 <h2>Water Sustainability</h2>
 
 <div class="container grid">
-
   <div class="card">
     <h3>Register Location</h3>
-    <input id="owner" placeholder="Apartment / Business Name">
+    <input id="owner" placeholder="Apartment / Business">
     <input id="city" placeholder="City">
     <button onclick="registerUser()">Register</button>
     <div class="status" id="regStatus"></div>
@@ -22,15 +21,14 @@
   <div class="card">
     <h3>Rain Prediction</h3>
     <button onclick="predictRain()">Predict Rainfall</button>
-    <div class="status" id="rainStatus"></div>
+    <div class="status" id="rainStatus">Weather info not fetched</div>
   </div>
 
   <div class="card">
-    <h3>Smart Tank</h3>
+    <h3>Tank Monitoring</h3>
     <button onclick="checkTank()">Check Tank</button>
-    <div class="status" id="tankStatus"></div>
+    <div class="status" id="tankStatus">Tank info not available</div>
   </div>
-
 </div>
 
 <script src="script.js"></script>
