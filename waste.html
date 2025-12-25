@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Waste Minimisation</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<a class="back" href="index.html">⬅ Back</a>
+
 <h2>Waste Minimisation System</h2>
 
 <div class="card">
-  <h3>AI Waste Sorting</h3>
+  <h3>Problem</h3>
+  <p>Manual waste sorting is inefficient and error-prone.</p>
+</div>
+
+<div class="card">
+  <h3>AI Waste Detection</h3>
   <button onclick="scanWaste()">Scan Waste</button>
   <p id="wasteResult"></p>
 </div>
 
 <div class="card">
-  <h3>Illegal Dumping Alert</h3>
-  <button onclick="illegalDump()">Report Dumping</button>
+  <h3>Illegal Dumping Alerts</h3>
+  <button onclick="illegalDump()">Report Illegal Dumping</button>
   <p id="dumpStatus"></p>
 </div>
 
 <div class="card">
-  <h3>Local Waste Hubs (200m)</h3>
-  <p>Underground storage + carbon purifiers active</p>
+  <h3>Local Waste Disposal Hubs</h3>
+  <p>
+    Waste hubs every 200 meters with:
+    <br>• Underground storage
+    <br>• Carbon purifiers for odour-free environment
+  </p>
 </div>
 
 <script src="script.js"></script>
