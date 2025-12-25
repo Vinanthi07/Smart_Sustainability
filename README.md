@@ -80,7 +80,7 @@ Usha H
 
 Vidyashree S Y
 
-– First-Year Engineering StudentS
+– First-Year Engineering Students
 
 This project demonstrates **front-end engineering excellence** and **practical sustainability solutions**, combining **interactive design, real-time updates, and smart urban concepts** in a deployable prototype.
 
