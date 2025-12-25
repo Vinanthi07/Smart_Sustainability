@@ -17,38 +17,47 @@ function addFood() {
   });
 }
 
-/* WASTE */
-/* ===== AI WASTE DETECTION ===== */
+/* ===== AI WASTE DETECTION (FIXED) ===== */
 
-let model, webcam, maxPredictions;
+let model, webcam;
 
 async function startAIDetection() {
-  const modelURL = "YOUR_MODEL_URL/model.json";
-  const metadataURL = "YOUR_MODEL_URL/metadata.json";
+  const status = document.getElementById("wasteStatus");
+  status.innerText = "Loading AI model...";
 
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
+  try {
+    const modelURL = "YOUR_MODEL_URL/model.json";
+    const metadataURL = "YOUR_MODEL_URL/metadata.json";
 
-  webcam = new tmImage.Webcam(300, 300, true);
-  await webcam.setup();
-  await webcam.play();
-  document.getElementById("video").replaceWith(webcam.canvas);
+    model = await tmImage.load(modelURL, metadataURL);
 
-  window.requestAnimationFrame(predictWaste);
+    webcam = new tmImage.Webcam(300, 300, true);
+    await webcam.setup(); // permission popup happens here
+    await webcam.play();
+
+    document.getElementById("webcamContainer").appendChild(webcam.canvas);
+
+    status.innerText = "Camera started. Detecting waste...";
+    window.requestAnimationFrame(predictWaste);
+
+  } catch (err) {
+    console.error(err);
+    status.innerText =
+      "Camera failed. Allow camera permission & use HTTPS.";
+  }
 }
 
 async function predictWaste() {
+  if (!webcam || !model) return;
+
   const prediction = await model.predict(webcam.canvas);
 
-  let highest = prediction[0];
-  for (let i = 1; i < prediction.length; i++) {
-    if (prediction[i].probability > highest.probability) {
-      highest = prediction[i];
-    }
-  }
+  let best = prediction.reduce((a, b) =>
+    a.probability > b.probability ? a : b
+  );
 
   document.getElementById("wasteStatus").innerText =
-    `Detected Waste: ${highest.className} (${(highest.probability * 100).toFixed(1)}%)`;
+    `Detected: ${best.className} (${(best.probability * 100).toFixed(1)}%)`;
 
   window.requestAnimationFrame(predictWaste);
 }
