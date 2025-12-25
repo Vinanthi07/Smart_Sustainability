@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Surplus Food</title>
+  <title>Surplus Food Management</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
@@ -11,20 +11,17 @@
 <h2>Surplus Food Management</h2>
 
 <div class="container grid">
-
   <div class="card">
     <h3>Upload Food</h3>
-    <input id="foodName" placeholder="Food item">
+    <input id="foodName" placeholder="Food Name">
     <input id="foodQty" placeholder="Quantity">
+    <input id="expiry" placeholder="Freshness (minutes)">
     <button onclick="addFood()">Upload</button>
-    <div class="status" id="foodStatus">
-      <input id="expiry" placeholder="Freshness time (minutes)">
-
-    </div>
+    <div class="status" id="foodStatus">No food uploaded yet</div>
   </div>
 
   <div class="card">
-    <h3>Available Food (Receiver)</h3>
+    <h3>Available Food</h3>
     <div class="list" id="foodList">No food available</div>
   </div>
 
@@ -32,7 +29,6 @@
     <h3>Live Map</h3>
     <div id="map"></div>
   </div>
-
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
