@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Waste Management</title>
+  <title>AI Waste Detection</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <a class="back" href="index.html">⬅ Back</a>
-<h2>Waste Management</h2>
+<h2>AI-Based Waste Management</h2>
 
 <div class="container grid">
 
   <div class="card">
-    <h3>Camera Detection</h3>
-    <button onclick="startCamera()">Start Camera</button>
-    <video id="video" width="100%" autoplay></video>
-    <select onchange="detectWaste(this.value)">
-      <option>Select Waste Type</option>
-      <option>Plastic</option>
-      <option>Organic</option>
-      <option>Metal</option>
-    </select>
-    <div class="status" id="wasteStatus"></div>
+    <h3>Automatic Waste Detection</h3>
+    <button onclick="startAIDetection()">Start Camera</button>
+    <video id="video" autoplay playsinline width="100%"></video>
+    <div class="status" id="wasteStatus">Waiting for camera...</div>
   </div>
 
   <div class="card">
-    <h3>Illegal Dumping</h3>
-    <button onclick="markDump()">Capture Location</button>
+    <h3>Illegal Dumping Alert</h3>
+    <button onclick="markDump()">Capture Dumping Location</button>
     <div class="status" id="dumpStatus"></div>
   </div>
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image"></script>
 <script src="script.js"></script>
 </body>
 </html>
