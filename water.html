@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Water Sustainability</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<a class="back" href="index.html">⬅ Back</a>
+
 <h2>Water Sustainability System</h2>
 
 <div class="card">
   <h3>AI Rainwater Harvesting</h3>
-  <button onclick="checkRain()">Predict Rainfall</button>
+  <button onclick="predictRain()">Predict Rainfall</button>
   <p id="rainStatus"></p>
 </div>
 
 <div class="card">
+  <h3>Smart Tank Monitoring</h3>
+  <button onclick="checkTank()">Check Tank Level</button>
+  <p id="tankStatus"></p>
+</div>
+
+<div class="card">
   <h3>AI Leak Detection</h3>
-  <button onclick="detectLeak()">Check Pipeline</button>
+  <button onclick="detectLeak()">Detect Leak</button>
   <p id="leakStatus"></p>
 </div>
 
 <div class="card">
   <h3>Desalination</h3>
-  <p>Graphene membranes + solar power active</p>
+  <p>Graphene membranes + solar power reduce energy cost.</p>
 </div>
 
 <div class="card">
   <h3>Grey Water Recycling</h3>
-  <p>Reuse for toilets, gardening & cleaning</p>
+  <p>
+    Reuse water from sinks, baths, washing machines for:
+    <br>• Toilet flushing
+    <br>• Gardening
+    <br>• Floor cleaning
+  </p>
 </div>
 
 <script src="script.js"></script>
