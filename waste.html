@@ -7,23 +7,21 @@
 <body>
 
 <a class="back" href="index.html">⬅ Back</a>
-<h2>AI-Based Waste Detection</h2>
+<h2>Waste Management</h2>
 
 <div class="container grid">
-
   <div class="card">
-    <h3>Automatic Waste Detection</h3>
+    <h3>Camera Waste Detection</h3>
     <button onclick="startCamera()">Start Camera</button>
-    <video id="camera" autoplay playsinline></video>
+    <video id="camera" autoplay playsinline width="100%"></video>
     <div class="status" id="wasteStatus">Camera not started</div>
   </div>
 
   <div class="card">
     <h3>Illegal Dumping Alert</h3>
     <button onclick="markDump()">Capture Dump Location</button>
-    <div class="status" id="dumpStatus"></div>
+    <div class="status" id="dumpStatus">No location selected</div>
   </div>
-
 </div>
 
 <script src="script.js"></script>
