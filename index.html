@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Smart City Prototype</title>
+  <title>Surplus Food Management</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Smart Sustainable City – Prototype</h1>
-<p>Select a module to view working concepts</p>
+<h2>Surplus Food Management System</h2>
+<p>Real-time bridge between excess food and NGOs</p>
 
-<div class="nav-box">
-  <a href="food.html">🍲 Surplus Food Management</a>
-  <a href="waste.html">🗑️ Waste Minimisation</a>
-  <a href="water.html">💧 Water Sustainability</a>
+<div class="card">
+  <h3>Donor / Public Upload</h3>
+  <input id="food" placeholder="Food item">
+  <input id="qty" placeholder="Quantity">
+  <input id="time" placeholder="Freshness timer (min)">
+  <button onclick="uploadFood()">Upload Food</button>
+  <p id="foodStatus"></p>
 </div>
+
+<div class="card">
+  <h3>Live Food Map</h3>
+  <div id="map"></div>
+  <button onclick="notifyNGO()">Notify Nearby NGOs</button>
+  <p id="alertStatus"></p>
+</div>
+
+<div class="card">
+  <h3>Receiver / NGO</h3>
+  <button onclick="claimFood()">Claim & Navigate</button>
+  <p id="claimStatus"></p>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
