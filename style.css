@@ -55,4 +55,7 @@ input {
   border-radius: 8px;
   margin: 10px 0;
 }
+.leaflet-popup-content {
+  font-size: 14px;
+}
 
