@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Waste Detection</title>
+  <title>Waste Management</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,21 +13,19 @@
 
   <div class="card">
     <h3>Automatic Waste Detection</h3>
-    <button onclick="startAIDetection()">Start Camera</button>
-    <div id="webcamContainer"></div>
+    <button onclick="startCamera()">Start Camera</button>
+    <video id="camera" autoplay playsinline></video>
     <div class="status" id="wasteStatus">Camera not started</div>
   </div>
 
   <div class="card">
     <h3>Illegal Dumping Alert</h3>
-    <button onclick="markDump()">Capture Dumping Location</button>
+    <button onclick="markDump()">Capture Dump Location</button>
     <div class="status" id="dumpStatus"></div>
   </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image"></script>
 <script src="script.js"></script>
 </body>
 </html>
