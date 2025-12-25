@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Surplus Food Management</title>
+  <title>Surplus Food</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
 <body>
 
 <a class="back" href="index.html">⬅ Back</a>
-
 <h2>Surplus Food Management</h2>
 
-<div class="card">
-  <input id="food" placeholder="Food item">
-  <input id="qty" placeholder="Quantity">
-  <input id="time" placeholder="Expiry (minutes)">
-  <button onclick="uploadFood()">Upload Food</button>
-  <p id="foodStatus"></p>
-</div>
+<div class="container grid">
 
-<div class="card">
-  <button onclick="toggleNGO()">Toggle NGO View</button>
-  <p id="ngoStatus">NGO Mode: OFF</p>
-</div>
+  <div class="card">
+    <h3>Upload Food</h3>
+    <input id="foodName" placeholder="Food item">
+    <input id="foodQty" placeholder="Quantity">
+    <button onclick="addFood()">Upload</button>
+    <div class="status" id="foodStatus"></div>
+  </div>
 
-<div class="card">
-  <div id="map"></div>
+  <div class="card">
+    <h3>Available Food (Receiver)</h3>
+    <div class="list" id="foodList">No food available</div>
+  </div>
+
+  <div class="card">
+    <h3>Live Map</h3>
+    <div id="map"></div>
+  </div>
+
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
