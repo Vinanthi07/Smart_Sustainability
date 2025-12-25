@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Surplus Food Management</title>
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
 <body>
 
@@ -13,32 +11,21 @@
 
 <h2>Surplus Food Management</h2>
 
-<div class="status-panel">
-  <b>Status:</b>
-  <p id="systemStatus">Waiting for uploads…</p>
-</div>
-
 <div class="card">
-  <h3>Donor / Public Upload</h3>
   <input id="food" placeholder="Food item">
   <input id="qty" placeholder="Quantity">
-  <input id="time" placeholder="Freshness timer (minutes)">
+  <input id="time" placeholder="Expiry (minutes)">
   <button onclick="uploadFood()">Upload Food</button>
+  <p id="foodStatus"></p>
 </div>
 
 <div class="card">
-  <h3>NGO Only View</h3>
-  <button onclick="toggleNGO()">Toggle NGO Mode</button>
-  <p id="ngoStatus">NGO mode OFF</p>
+  <button onclick="toggleNGO()">Toggle NGO View</button>
+  <p id="ngoStatus">NGO Mode: OFF</p>
 </div>
 
 <div class="card">
-  <h3>Live Food Map</h3>
   <div id="map"></div>
-  <div class="legend">
-    <p>🟢 Food Available</p>
-    <p>⭕ NGO Visibility Radius (2 km)</p>
-  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
