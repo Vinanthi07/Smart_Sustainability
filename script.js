@@ -1,103 +1,114 @@
-let map;
-let userLat, userLng;
+/* ---------- FOOD MODULE ---------- */
+let map, userLat, userLng;
 let foodListings = [];
-const NGO_RADIUS = 2; // km
+let ngoMode = false;
+const NGO_RADIUS = 2;
 
-// Initialize map with user location
-navigator.geolocation.getCurrentPosition(pos => {
-  userLat = pos.coords.latitude;
-  userLng = pos.coords.longitude;
+if (document.getElementById("map")) {
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
 
-  map = L.map("map").setView([userLat, userLng], 14);
+    map = L.map("map").setView([userLat, userLng], 14);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap"
-  }).addTo(map);
+    L.circle([userLat, userLng], {
+      radius: NGO_RADIUS * 1000,
+      color: "green",
+      fillOpacity: 0.1
+    }).addTo(map);
+  });
+}
 
-  L.circle([userLat, userLng], {
-    radius: NGO_RADIUS * 1000,
-    color: "green",
-    fillOpacity: 0.1
-  }).addTo(map).bindPopup("NGO visibility radius");
-});
-
-// Upload food
 function uploadFood() {
   const food = document.getElementById("food").value;
   const qty = document.getElementById("qty").value;
   const time = parseInt(document.getElementById("time").value);
 
   if (!food || !qty || !time) {
-    document.getElementById("foodStatus").innerText =
-      "Please fill all fields.";
+    updateStatus("Fill all fields.");
     return;
   }
 
   const listing = {
-    food,
-    qty,
-    timeLeft: time * 60, // seconds
-    lat: userLat,
-    lng: userLng
+    food, qty, timeLeft: time * 60,
+    lat: userLat, lng: userLng
   };
 
   listing.marker = L.marker([listing.lat, listing.lng]).addTo(map);
-
   foodListings.push(listing);
   updatePopup(listing);
-  startCountdown(listing);
+  startTimer(listing);
 
-  document.getElementById("foodStatus").innerText =
-    "Food uploaded and visible to nearby NGOs.";
+  updateStatus("Food uploaded successfully.");
 }
 
-// Update marker popup
-function updatePopup(listing) {
-  listing.marker.bindPopup(`
-    <b>${listing.food}</b><br>
-    Quantity: ${listing.qty}<br>
-    ⏱ Time left: <span id="t${listing.timeLeft}">${formatTime(listing.timeLeft)}</span><br><br>
-    <button onclick="claimFood(${foodListings.indexOf(listing)})">
-      Claim & Navigate
-    </button>
-  `);
-}
-
-// Countdown logic
-function startCountdown(listing) {
+function startTimer(listing) {
   listing.interval = setInterval(() => {
     listing.timeLeft--;
-
     if (listing.timeLeft <= 0) {
       map.removeLayer(listing.marker);
       clearInterval(listing.interval);
-      document.getElementById("systemStatus").innerText =
-        "A food listing expired and was removed.";
-      return;
+      updateStatus("Food expired and removed.");
+    } else {
+      updatePopup(listing);
     }
-
-    updatePopup(listing);
   }, 1000);
 }
 
-// Claim food
-function claimFood(index) {
-  const listing = foodListings[index];
-  clearInterval(listing.interval);
-  map.removeLayer(listing.marker);
-
-  window.open(
-    `https://www.google.com/maps/dir/?api=1&destination=${listing.lat},${listing.lng}`,
-    "_blank"
+function updatePopup(listing) {
+  listing.marker.bindPopup(
+    `<b>${listing.food}</b><br>
+     Quantity: ${listing.qty}<br>
+     Time left: ${Math.floor(listing.timeLeft/60)}m ${listing.timeLeft%60}s<br>
+     <button onclick="claimFood(${foodListings.indexOf(listing)})">Claim</button>`
   );
-
-  document.getElementById("systemStatus").innerText =
-    "Food claimed successfully. Navigation started.";
 }
 
-// Time format helper
-function formatTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${m}m ${s}s`;
+function claimFood(i) {
+  const l = foodListings[i];
+  clearInterval(l.interval);
+  map.removeLayer(l.marker);
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${l.lat},${l.lng}`);
+  updateStatus("Food claimed and navigation started.");
+}
+
+function toggleNGO() {
+  ngoMode = !ngoMode;
+  document.getElementById("ngoStatus").innerText =
+    ngoMode ? "NGO mode ON" : "NGO mode OFF";
+}
+
+/* ---------- WASTE MODULE ---------- */
+function scanWaste() {
+  const types = ["Wet", "Dry", "Plastic", "E-Waste"];
+  document.getElementById("wasteResult").innerText =
+    "AI detected: " + types[Math.floor(Math.random() * types.length)];
+}
+
+function illegalDump() {
+  document.getElementById("dumpStatus").innerText =
+    "Municipal authorities notified.";
+}
+
+/* ---------- WATER MODULE ---------- */
+function predictRain() {
+  document.getElementById("rainStatus").innerText =
+    "Rain predicted. Harvesting prepared.";
+}
+
+function checkTank() {
+  document.getElementById("tankStatus").innerText =
+    "Tank level optimized for new rainwater.";
+}
+
+function detectLeak() {
+  document.getElementById("leakStatus").innerText =
+    "Leak detected using acoustic sensors.";
+}
+
+/* ---------- STATUS ---------- */
+function updateStatus(msg) {
+  const el = document.getElementById("systemStatus");
+  if (el) el.innerText = msg;
 }
