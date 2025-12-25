@@ -1,47 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Surplus Food Rescue Prototype</title>
+  <title>Smart City Prototype</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Surplus Food Management System</h1>
-<p class="problem">
-There is no real-time communication channel to bridge excess food
-to needy people before it spoils.
-</p>
+<h1>Smart Sustainable City – Prototype</h1>
+<p>Select a module to view working concepts</p>
 
-<div class="container">
-
-  <!-- DONOR -->
-  <div class="card">
-    <h2>🍱 Donor Panel</h2>
-    <input type="text" id="foodName" placeholder="Food name">
-    <input type="number" id="quantity" placeholder="Quantity (plates)">
-    <input type="number" id="timer" placeholder="Freshness timer (minutes)">
-    <button onclick="uploadFood()">Upload Food</button>
-    <p id="donorStatus"></p>
-  </div>
-
-  <!-- LIVE MAP -->
-  <div class="card">
-    <h2>🗺️ Real-Time Map</h2>
-    <div class="map">📍 Food location uploaded</div>
-    <button onclick="sendAlerts()">Notify Nearby NGOs</button>
-    <p id="alertStatus"></p>
-  </div>
-
-  <!-- RECEIVER -->
-  <div class="card">
-    <h2>🤝 Receiver / NGO</h2>
-    <button onclick="claimFood()">Claim Food</button>
-    <p id="claimStatus"></p>
-  </div>
-
+<div class="nav-box">
+  <a href="food.html">🍲 Surplus Food Management</a>
+  <a href="waste.html">🗑️ Waste Minimisation</a>
+  <a href="water.html">💧 Water Sustainability</a>
 </div>
 
-<script src="script.js"></script>
 </body>
 </html>
