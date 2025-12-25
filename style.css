@@ -1,52 +1,40 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f2f7f5;
+  background: #eef5f2;
   text-align: center;
   padding: 20px;
 }
 
-h1 {
+h1, h2 {
   color: #1f7a57;
 }
 
-.problem {
-  max-width: 700px;
-  margin: auto;
-  color: #444;
-  font-size: 16px;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 30px;
+.nav-box a {
+  display: block;
+  background: white;
+  margin: 15px auto;
+  padding: 15px;
+  width: 320px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #1f7a57;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .card {
   background: white;
-  width: 280px;
   padding: 20px;
+  margin: 15px auto;
+  width: 320px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.card h2 {
-  color: #1f7a57;
-}
-
-input {
-  width: 90%;
-  padding: 6px;
-  margin: 6px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 button {
   background: #1f7a57;
   color: white;
   border: none;
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -55,9 +43,8 @@ button:hover {
   background: #145a3d;
 }
 
-.map {
-  background: #e8f3ef;
-  padding: 20px;
-  margin: 10px 0;
-  border-radius: 8px;
+input {
+  width: 90%;
+  padding: 6px;
+  margin: 6px 0;
 }
