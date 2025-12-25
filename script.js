@@ -18,15 +18,41 @@ function addFood() {
 }
 
 /* WASTE */
-function startCamera() {
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => video.srcObject = stream)
-    .catch(() => wasteStatus.innerText = "Camera access denied");
+/* ===== AI WASTE DETECTION ===== */
+
+let model, webcam, maxPredictions;
+
+async function startAIDetection() {
+  const modelURL = "YOUR_MODEL_URL/model.json";
+  const metadataURL = "YOUR_MODEL_URL/metadata.json";
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+
+  webcam = new tmImage.Webcam(300, 300, true);
+  await webcam.setup();
+  await webcam.play();
+  document.getElementById("video").replaceWith(webcam.canvas);
+
+  window.requestAnimationFrame(predictWaste);
 }
 
-function detectWaste(type) {
-  wasteStatus.innerText = `Detected waste type: ${type}`;
+async function predictWaste() {
+  const prediction = await model.predict(webcam.canvas);
+
+  let highest = prediction[0];
+  for (let i = 1; i < prediction.length; i++) {
+    if (prediction[i].probability > highest.probability) {
+      highest = prediction[i];
+    }
+  }
+
+  document.getElementById("wasteStatus").innerText =
+    `Detected Waste: ${highest.className} (${(highest.probability * 100).toFixed(1)}%)`;
+
+  window.requestAnimationFrame(predictWaste);
 }
+
 
 /* ILLEGAL DUMP */
 function markDump() {
