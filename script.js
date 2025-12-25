@@ -1,23 +1,31 @@
-let foodActive = false;
-let map, marker, foodLat, foodLng;
+let map;
+let userLat, userLng;
+let foodListings = [];
+const NGO_RADIUS = 2; // km
 
-/* Initialize map */
-navigator.geolocation.getCurrentPosition(position => {
-  foodLat = position.coords.latitude;
-  foodLng = position.coords.longitude;
+// Initialize map with user location
+navigator.geolocation.getCurrentPosition(pos => {
+  userLat = pos.coords.latitude;
+  userLng = pos.coords.longitude;
 
-  map = L.map("map").setView([foodLat, foodLng], 15);
+  map = L.map("map").setView([userLat, userLng], 14);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(map);
+
+  L.circle([userLat, userLng], {
+    radius: NGO_RADIUS * 1000,
+    color: "green",
+    fillOpacity: 0.1
+  }).addTo(map).bindPopup("NGO visibility radius");
 });
 
-/* Upload food */
+// Upload food
 function uploadFood() {
   const food = document.getElementById("food").value;
   const qty = document.getElementById("qty").value;
-  const time = document.getElementById("time").value;
+  const time = parseInt(document.getElementById("time").value);
 
   if (!food || !qty || !time) {
     document.getElementById("foodStatus").innerText =
@@ -25,54 +33,71 @@ function uploadFood() {
     return;
   }
 
-  foodActive = true;
+  const listing = {
+    food,
+    qty,
+    timeLeft: time * 60, // seconds
+    lat: userLat,
+    lng: userLng
+  };
 
-  marker = L.marker([foodLat, foodLng])
-    .addTo(map)
-    .bindPopup("🍱 Surplus Food Available")
-    .openPopup();
+  listing.marker = L.marker([listing.lat, listing.lng]).addTo(map);
+
+  foodListings.push(listing);
+  updatePopup(listing);
+  startCountdown(listing);
 
   document.getElementById("foodStatus").innerText =
-    "Food uploaded and visible on live map.";
+    "Food uploaded and visible to nearby NGOs.";
+}
 
-  /* Freshness timer */
-  setTimeout(() => {
-    if (foodActive) {
-      map.removeLayer(marker);
-      document.getElementById("foodStatus").innerText =
-        "Food expired and removed automatically.";
-      foodActive = false;
+// Update marker popup
+function updatePopup(listing) {
+  listing.marker.bindPopup(`
+    <b>${listing.food}</b><br>
+    Quantity: ${listing.qty}<br>
+    ⏱ Time left: <span id="t${listing.timeLeft}">${formatTime(listing.timeLeft)}</span><br><br>
+    <button onclick="claimFood(${foodListings.indexOf(listing)})">
+      Claim & Navigate
+    </button>
+  `);
+}
+
+// Countdown logic
+function startCountdown(listing) {
+  listing.interval = setInterval(() => {
+    listing.timeLeft--;
+
+    if (listing.timeLeft <= 0) {
+      map.removeLayer(listing.marker);
+      clearInterval(listing.interval);
+      document.getElementById("systemStatus").innerText =
+        "A food listing expired and was removed.";
+      return;
     }
-  }, time * 60000);
+
+    updatePopup(listing);
+  }, 1000);
 }
 
-/* Notify NGOs */
-function notifyNGO() {
-  if (foodActive) {
-    document.getElementById("alertStatus").innerText =
-      "Nearby NGOs alerted via SMS & WhatsApp.";
-  } else {
-    document.getElementById("alertStatus").innerText =
-      "No active food listing.";
-  }
-}
-
-/* Claim & Navigate */
-function claimFood() {
-  if (!foodActive) {
-    document.getElementById("claimStatus").innerText =
-      "Food already claimed or expired.";
-    return;
-  }
-
-  foodActive = false;
-  map.removeLayer(marker);
+// Claim food
+function claimFood(index) {
+  const listing = foodListings[index];
+  clearInterval(listing.interval);
+  map.removeLayer(listing.marker);
 
   window.open(
-    `https://www.google.com/maps/dir/?api=1&destination=${foodLat},${foodLng}`,
+    `https://www.google.com/maps/dir/?api=1&destination=${listing.lat},${listing.lng}`,
     "_blank"
   );
 
-  document.getElementById("claimStatus").innerText =
-    "Food claimed. Navigation opened.";
+  document.getElementById("systemStatus").innerText =
+    "Food claimed successfully. Navigation started.";
+}
+
+// Time format helper
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}m ${s}s`;
 }
