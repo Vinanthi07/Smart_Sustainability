@@ -1,74 +1,82 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #eef5f2;
-  text-align: center;
-  padding: 20px;
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4faf7;
+  color: #333;
 }
 
 h1, h2 {
-  color: #1f7a57;
+  text-align: center;
+  color: #146c43;
 }
 
-.back {
+a.back {
+  display: inline-block;
+  margin: 15px;
   text-decoration: none;
-  color: #1f7a57;
+  color: #146c43;
   font-weight: bold;
 }
 
-.nav-box a {
-  display: block;
-  background: white;
-  margin: 15px auto;
-  padding: 15px;
-  width: 320px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: #1f7a57;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .card {
   background: white;
   padding: 20px;
-  margin: 15px auto;
-  width: 330px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-input {
-  width: 90%;
-  padding: 6px;
-  margin: 6px 0;
+.card h3 {
+  margin-top: 0;
+  color: #146c43;
+}
+
+input, button, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 button {
-  background: #1f7a57;
+  background: #146c43;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #145a3d;
+  background: #0f5132;
 }
 
-#map {
-  height: 260px;
-  border-radius: 8px;
+#map, #dumpMap {
+  height: 250px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
-.legend {
-  text-align: left;
+.status {
+  margin-top: 10px;
   font-size: 14px;
+  color: #555;
 }
 
-.status-panel {
-  background: white;
+.list {
+  margin-top: 10px;
+  font-size: 14px;
+  background: #eef7f2;
   padding: 10px;
-  margin: auto;
-  width: 330px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
