@@ -1,21 +1,46 @@
 /* FOOD */
+/* ===== FOOD WITH FRESHNESS TIMER ===== */
+
 let foods = [];
 
 function addFood() {
   const name = foodName.value;
   const qty = foodQty.value;
-  if (!name || !qty) return;
+  const minutes = expiry.value;
 
-  foods.push(`${name} (${qty})`);
-  foodList.innerHTML = foods.join("<br>");
+  if (!name || !qty || !minutes) {
+    foodStatus.innerText = "Fill all fields";
+    return;
+  }
+
+  const expiryTime = Date.now() + minutes * 60000;
+
+  foods.push({ name, qty, expiryTime });
   foodStatus.innerText = "Food uploaded successfully";
 
-  navigator.geolocation.getCurrentPosition(pos => {
-    const map = L.map("map").setView([pos.coords.latitude, pos.coords.longitude], 14);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-    L.marker([pos.coords.latitude, pos.coords.longitude]).addTo(map);
-  });
+  updateFoodList();
 }
+
+function updateFoodList() {
+  const now = Date.now();
+  foodList.innerHTML = "";
+
+  foods = foods.filter(f => f.expiryTime > now);
+
+  if (foods.length === 0) {
+    foodList.innerText = "No fresh food available";
+    return;
+  }
+
+  foods.forEach(f => {
+    const remaining = Math.floor((f.expiryTime - now) / 60000);
+    foodList.innerHTML +=
+      `<div>🍱 ${f.name} (${f.qty}) – Fresh for ${remaining} min</div>`;
+  });
+
+  setTimeout(updateFoodList, 60000);
+}
+
 
 /* ===== AI WASTE DETECTION (FIXED) ===== */
 
