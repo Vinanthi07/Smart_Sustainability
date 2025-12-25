@@ -1,45 +1,49 @@
 let foodActive = false;
 
 function uploadFood() {
-  const food = document.getElementById("foodName").value;
-  const qty = document.getElementById("quantity").value;
-  const time = document.getElementById("timer").value;
+  const time = document.getElementById("time").value;
+  foodActive = true;
+  document.getElementById("foodStatus").innerText =
+    "Food listed. Auto removal after freshness timer.";
 
-  if (food && qty && time) {
-    foodActive = true;
-    document.getElementById("donorStatus").innerText =
-      "Food listed successfully. Timer started.";
-
-    setTimeout(() => {
-      if (foodActive) {
-        document.getElementById("donorStatus").innerText =
-          "Food expired. Listing removed automatically.";
-        foodActive = false;
-      }
-    }, time * 60000);
-  } else {
-    document.getElementById("donorStatus").innerText =
-      "Please fill all fields.";
-  }
-}
-
-function sendAlerts() {
-  if (foodActive) {
-    document.getElementById("alertStatus").innerText =
-      "Nearby NGOs alerted via SMS & WhatsApp.";
-  } else {
-    document.getElementById("alertStatus").innerText =
-      "No active food listing available.";
-  }
+  setTimeout(() => {
+    if (foodActive) {
+      document.getElementById("foodStatus").innerText =
+        "Food expired and removed automatically.";
+      foodActive = false;
+    }
+  }, time * 60000);
 }
 
 function claimFood() {
   if (foodActive) {
     foodActive = false;
     document.getElementById("claimStatus").innerText =
-      "Food claimed. Navigate to location to rescue food.";
+      "Food claimed and navigation enabled.";
   } else {
     document.getElementById("claimStatus").innerText =
-      "Food already claimed or expired.";
+      "No active food available.";
   }
+}
+
+function scanWaste() {
+  const types = ["Wet", "Dry", "Plastic", "E-Waste"];
+  document.getElementById("wasteResult").innerText =
+    "AI detected: " + types[Math.floor(Math.random()*types.length)] +
+    " waste → directed to correct bin.";
+}
+
+function illegalDump() {
+  document.getElementById("dumpStatus").innerText =
+    "Illegal dumping detected. Municipal authorities alerted.";
+}
+
+function checkRain() {
+  document.getElementById("rainStatus").innerText =
+    "Rain predicted. Tank space optimized for harvesting.";
+}
+
+function detectLeak() {
+  document.getElementById("leakStatus").innerText =
+    "Acoustic sensors detected leak. Maintenance alerted.";
 }
