@@ -1,6 +1,5 @@
-/* ================== FOOD ================== */
+//* ================== FOOD ================== */
 let foods = [];
-let mapInitialized = false;
 let map, markers = [];
 
 function addFood() {
@@ -8,18 +7,18 @@ function addFood() {
   const qty = document.getElementById("foodQty").value;
   const minutes = parseInt(document.getElementById("expiry").value);
 
-  if(!name || !qty || !minutes) {
+  if (!name || !qty || !minutes) {
     document.getElementById("foodStatus").innerText = "Fill all fields";
     return;
   }
 
-  const expiryTime = Date.now() + minutes*60000;
-  foods.push({name, qty, expiryTime});
+  const expiryTime = Date.now() + minutes * 60000;
+  foods.push({ name, qty, expiryTime });
 
   document.getElementById("foodStatus").innerText = "Food uploaded successfully";
   updateFoodList();
 
-  if(!mapInitialized) initMap();
+  if (!map) initMap();
 }
 
 function updateFoodList() {
@@ -29,21 +28,21 @@ function updateFoodList() {
 
   foods = foods.filter(f => f.expiryTime > now);
 
-  if(foods.length === 0) { listDiv.innerText = "No food available"; return; }
+  if (foods.length === 0) { listDiv.innerText = "No food available"; return; }
 
   foods.forEach(f => {
-    const remaining = Math.ceil((f.expiryTime-now)/60000);
+    const remaining = Math.ceil((f.expiryTime - now) / 60000);
     listDiv.innerHTML += `🍱 ${f.name} (${f.qty}) - Fresh for ${remaining} min<br>`;
   });
+
+  setTimeout(updateFoodList, 60000);
 }
 
 function initMap() {
   navigator.geolocation.getCurrentPosition(pos => {
     map = L.map("map").setView([pos.coords.latitude, pos.coords.longitude], 14);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-    mapInitialized = true;
 
-    // add markers for all foods
     foods.forEach(f => {
       const marker = L.marker([pos.coords.latitude, pos.coords.longitude]).addTo(map)
         .bindPopup(`🍱 ${f.name} (${f.qty})`);
@@ -57,17 +56,12 @@ function startCamera() {
   const video = document.getElementById("camera");
   const status = document.getElementById("wasteStatus");
 
-  navigator.mediaDevices.getUserMedia({video:true})
-  .then(stream => {
-    video.srcObject = stream;
-    status.innerText = "Camera started. Detecting waste...";
-    setTimeout(()=> {
-      const types = ["Plastic","Organic","Metal"];
-      const detected = types[Math.floor(Math.random()*types.length)];
-      status.innerText = `Detected Waste Type: ${detected}`;
-    },3000);
-  })
-  .catch(()=> status.innerText="Camera access denied");
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+      status.innerText = "Camera started. Select waste type manually.";
+    })
+    .catch(() => status.innerText = "Camera permission denied");
 }
 
 function markDump() {
