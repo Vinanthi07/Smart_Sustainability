@@ -7,15 +7,15 @@
 <body>
 
 <a class="back" href="index.html">⬅ Back</a>
-<h2>AI-Based Waste Management</h2>
+<h2>AI-Based Waste Detection</h2>
 
 <div class="container grid">
 
   <div class="card">
     <h3>Automatic Waste Detection</h3>
     <button onclick="startAIDetection()">Start Camera</button>
-    <video id="video" autoplay playsinline width="100%"></video>
-    <div class="status" id="wasteStatus">Waiting for camera...</div>
+    <div id="webcamContainer"></div>
+    <div class="status" id="wasteStatus">Camera not started</div>
   </div>
 
   <div class="card">
