@@ -1,104 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Storm Breakers | Smart Sustainable City</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Surplus Food Rescue Prototype</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav>
-    <h1>STORM BREAKERS</h1>
-    <ul>
-        <li><a href="#solutions">Solutions</a></li>
-        <li><a href="#technology">Technology</a></li>
-        <li><a href="#team">Team</a></li>
-    </ul>
-</nav>
+<h1>Surplus Food Management System</h1>
+<p class="problem">
+There is no real-time communication channel to bridge excess food
+to needy people before it spoils.
+</p>
 
-<!-- HERO -->
-<section class="hero">
-    <h2>Building Smarter & Sustainable Cities</h2>
-    <p>AI-powered solutions for food, waste, water & air management</p>
-</section>
+<div class="container">
 
-<!-- SOLUTIONS -->
-<section id="solutions" class="section">
-    <h2>Our Smart Solutions</h2>
+  <!-- DONOR -->
+  <div class="card">
+    <h2>🍱 Donor Panel</h2>
+    <input type="text" id="foodName" placeholder="Food name">
+    <input type="number" id="quantity" placeholder="Quantity (plates)">
+    <input type="number" id="timer" placeholder="Freshness timer (minutes)">
+    <button onclick="uploadFood()">Upload Food</button>
+    <p id="donorStatus"></p>
+  </div>
 
-    <div class="cards">
+  <!-- LIVE MAP -->
+  <div class="card">
+    <h2>🗺️ Real-Time Map</h2>
+    <div class="map">📍 Food location uploaded</div>
+    <button onclick="sendAlerts()">Notify Nearby NGOs</button>
+    <p id="alertStatus"></p>
+  </div>
 
-        <div class="card">
-            <h3>🍲 Smart Food Rescue</h3>
-            <p>
-                A real-time food sharing system that prevents food waste
-                and improves global food security.
-            </p>
-            <ul>
-                <li>Freshness timer auto-removes expired food</li>
-                <li>Donors upload food & quantity</li>
-                <li>NGOs receive alerts & claim food</li>
-                <li>Live map for fast rescue</li>
-            </ul>
-        </div>
+  <!-- RECEIVER -->
+  <div class="card">
+    <h2>🤝 Receiver / NGO</h2>
+    <button onclick="claimFood()">Claim Food</button>
+    <p id="claimStatus"></p>
+  </div>
 
-        <div class="card">
-            <h3>🗑️ Smart Waste Management</h3>
-            <p>
-                An AI-driven waste system that keeps cities clean and odour-free.
-            </p>
-            <ul>
-                <li>AI cameras identify waste type</li>
-                <li>Automatic waste sorting</li>
-                <li>Underground waste storage</li>
-                <li>Illegal dumping alerts to authorities</li>
-            </ul>
-        </div>
+</div>
 
-        <div class="card">
-            <h3>💧 Smart Water Management</h3>
-            <p>
-                Intelligent systems that save water and prevent future shortages.
-            </p>
-            <ul>
-                <li>Rainfall prediction</li>
-                <li>Automatic tank level control</li>
-                <li>Leak detection using acoustic sensors</li>
-                <li>Solar-powered desalination</li>
-            </ul>
-        </div>
-
-    </div>
-</section>
-
-<!-- TECHNOLOGY -->
-<section id="technology" class="section light">
-    <h2>Technology Behind the System</h2>
-
-    <div class="tech">
-        <div>AI & Computer Vision</div>
-        <div>IoT Sensors</div>
-        <div>Cloud Monitoring</div>
-        <div>Mobile Alerts</div>
-        <div>Solar & Green Tech</div>
-    </div>
-</section>
-
-<!-- TEAM -->
-<section id="team" class="section">
-    <h2>Our Team</h2>
-    <ul class="team">
-        <li>Vinanthi Manohari V</li>
-        <li>Usha H</li>
-        <li>Vidhyashree S Y</li>
-    </ul>
-    <p class="footer-note">First Year Engineering Students</p>
-</section>
-
-<footer>
-    <p>© 2025 Storm Breakers | Sustainable City Innovation</p>
-</footer>
-
+<script src="script.js"></script>
 </body>
 </html>
