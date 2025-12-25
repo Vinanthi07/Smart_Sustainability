@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Surplus Food Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Surplus Food Management</h2>
+<p>Bridging excess food to NGOs before it spoils</p>
+
+<div class="card">
+  <h3>Donor / Public Upload</h3>
+  <input id="food" placeholder="Food item">
+  <input id="qty" placeholder="Quantity">
+  <input id="time" placeholder="Freshness timer (min)">
+  <button onclick="uploadFood()">Upload</button>
+  <p id="foodStatus"></p>
+</div>
+
+<div class="card">
+  <h3>NGO / Receiver</h3>
+  <button onclick="claimFood()">Claim Food</button>
+  <p id="claimStatus"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
