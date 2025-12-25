@@ -1,13 +1,44 @@
 let foodActive = false;
+let map, marker, foodLat, foodLng;
 
+/* Initialize map */
+navigator.geolocation.getCurrentPosition(position => {
+  foodLat = position.coords.latitude;
+  foodLng = position.coords.longitude;
+
+  map = L.map("map").setView([foodLat, foodLng], 15);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+  }).addTo(map);
+});
+
+/* Upload food */
 function uploadFood() {
+  const food = document.getElementById("food").value;
+  const qty = document.getElementById("qty").value;
   const time = document.getElementById("time").value;
-  foodActive = true;
-  document.getElementById("foodStatus").innerText =
-    "Food listed. Auto removal after freshness timer.";
 
+  if (!food || !qty || !time) {
+    document.getElementById("foodStatus").innerText =
+      "Please fill all fields.";
+    return;
+  }
+
+  foodActive = true;
+
+  marker = L.marker([foodLat, foodLng])
+    .addTo(map)
+    .bindPopup("🍱 Surplus Food Available")
+    .openPopup();
+
+  document.getElementById("foodStatus").innerText =
+    "Food uploaded and visible on live map.";
+
+  /* Freshness timer */
   setTimeout(() => {
     if (foodActive) {
+      map.removeLayer(marker);
       document.getElementById("foodStatus").innerText =
         "Food expired and removed automatically.";
       foodActive = false;
@@ -15,35 +46,33 @@ function uploadFood() {
   }, time * 60000);
 }
 
-function claimFood() {
+/* Notify NGOs */
+function notifyNGO() {
   if (foodActive) {
-    foodActive = false;
-    document.getElementById("claimStatus").innerText =
-      "Food claimed and navigation enabled.";
+    document.getElementById("alertStatus").innerText =
+      "Nearby NGOs alerted via SMS & WhatsApp.";
   } else {
-    document.getElementById("claimStatus").innerText =
-      "No active food available.";
+    document.getElementById("alertStatus").innerText =
+      "No active food listing.";
   }
 }
 
-function scanWaste() {
-  const types = ["Wet", "Dry", "Plastic", "E-Waste"];
-  document.getElementById("wasteResult").innerText =
-    "AI detected: " + types[Math.floor(Math.random()*types.length)] +
-    " waste → directed to correct bin.";
-}
+/* Claim & Navigate */
+function claimFood() {
+  if (!foodActive) {
+    document.getElementById("claimStatus").innerText =
+      "Food already claimed or expired.";
+    return;
+  }
 
-function illegalDump() {
-  document.getElementById("dumpStatus").innerText =
-    "Illegal dumping detected. Municipal authorities alerted.";
-}
+  foodActive = false;
+  map.removeLayer(marker);
 
-function checkRain() {
-  document.getElementById("rainStatus").innerText =
-    "Rain predicted. Tank space optimized for harvesting.";
-}
+  window.open(
+    `https://www.google.com/maps/dir/?api=1&destination=${foodLat},${foodLng}`,
+    "_blank"
+  );
 
-function detectLeak() {
-  document.getElementById("leakStatus").innerText =
-    "Acoustic sensors detected leak. Maintenance alerted.";
+  document.getElementById("claimStatus").innerText =
+    "Food claimed. Navigation opened.";
 }
