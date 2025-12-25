@@ -7,23 +7,30 @@
 <body>
 
 <a class="back" href="index.html">⬅ Back</a>
-
 <h2>Water Sustainability</h2>
 
-<div class="card">
-  <input id="owner" placeholder="Apartment / Business Name">
-  <input id="location" placeholder="City">
-  <button onclick="registerWaterUser()">Register</button>
-</div>
+<div class="container grid">
 
-<div class="card">
-  <button onclick="checkWeather()">Predict Rainfall</button>
-  <p id="rainStatus"></p>
-</div>
+  <div class="card">
+    <h3>Register Location</h3>
+    <input id="owner" placeholder="Apartment / Business Name">
+    <input id="city" placeholder="City">
+    <button onclick="registerUser()">Register</button>
+    <div class="status" id="regStatus"></div>
+  </div>
 
-<div class="card">
-  <button onclick="checkTank()">Smart Tank Monitor</button>
-  <p id="tankStatus"></p>
+  <div class="card">
+    <h3>Rain Prediction</h3>
+    <button onclick="predictRain()">Predict Rainfall</button>
+    <div class="status" id="rainStatus"></div>
+  </div>
+
+  <div class="card">
+    <h3>Smart Tank</h3>
+    <button onclick="checkTank()">Check Tank</button>
+    <div class="status" id="tankStatus"></div>
+  </div>
+
 </div>
 
 <script src="script.js"></script>
